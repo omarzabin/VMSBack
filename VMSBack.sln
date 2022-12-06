@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMSBack", "VMSBack\VMSBack.csproj", "{7DE2AD15-2761-417E-A91E-8F516685384A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DE2AD15-2761-417E-A91E-8F516685384A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE2AD15-2761-417E-A91E-8F516685384A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE2AD15-2761-417E-A91E-8F516685384A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE2AD15-2761-417E-A91E-8F516685384A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA247B40-688B-4C13-9F45-D94BF4C145CC}
+	EndGlobalSection
+EndGlobal
