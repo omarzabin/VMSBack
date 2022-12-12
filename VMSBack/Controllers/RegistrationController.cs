@@ -22,7 +22,7 @@ namespace VMSBack.Controllers
 
         public async Task<ActionResult<int>> Regester(VehicleOwner owner)
         {
-            using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var ownerId = await conn.ExecuteScalarAsync<int>
                 (@"Insert into VehicleOwners (FirstName,LastName,Email,Password)
                  values(@FirstName,@LastName,@Email,@Password) select SCOPE_IDENTITY()"
