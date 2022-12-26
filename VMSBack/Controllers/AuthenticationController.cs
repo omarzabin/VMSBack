@@ -40,7 +40,11 @@ namespace VMSBack.Controllers
         [HttpGet("test2")]
         public async Task<IActionResult> test2()
         {
-            return Ok("hello world");
+            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
+            var registration = await connVMS.QueryAsync<Alerts>
+                (@" select TOP 10 * from [AllEvents] where VehicleID = 460 order by GPSTime");
+
+            return Ok(registration);
         }
 
 
