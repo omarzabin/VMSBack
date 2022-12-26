@@ -17,11 +17,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
-                          /*.WithOrigins(
-                              "exp://192.168.0.139:19000",
-                               "http://localhost:19006",
-                               "http://localhost:19000"
-                               );*/
+                          
                       });
 });
 
