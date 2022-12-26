@@ -26,7 +26,7 @@ namespace VMSBack.Controllers
             var ownerId = await conn.ExecuteScalarAsync<int>
                 (@"Insert into VehicleOwners (FirstName,LastName,Email,Password)
                  values(@FirstName,@LastName,@Email,@Password) select SCOPE_IDENTITY()"
-                , new { owner.FirstName, owner.LastName, owner.Email, owner.password });
+                , new { owner.FirstName, owner.LastName, owner.Email, owner.Password });
             return Ok(ownerId);
         }
     }
