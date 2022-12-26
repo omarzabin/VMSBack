@@ -15,6 +15,7 @@ namespace VMSBack.Controllers
         public AlertsController(IConfiguration configuration)
         {
             _config = configuration;
+            
         }
 
         [HttpGet]
