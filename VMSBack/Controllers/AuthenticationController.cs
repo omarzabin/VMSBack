@@ -37,5 +37,12 @@ namespace VMSBack.Controllers
             return Ok("hello world");
         }
 
+        [HttpGet("test2")]
+        public async Task<IActionResult> test2()
+        {
+            return Ok("hello world");
+        }
+
+
     }
 }
