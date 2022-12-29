@@ -23,7 +23,7 @@ namespace VMSBack.Controllers
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
             var registration = await connVMS.QueryAsync<Alerts>
-                (@" select TOP 20 * from [AllEvents] where VehicleID = 460 order by GPSTime");
+                (@" select TOP 100 * from [AllEvents] where VehicleID = 460 order by GPSTime");
 
             return Ok(registration);
         }
