@@ -24,7 +24,7 @@ namespace VMSBack.Controllers
 
             var ownerIdRes = await connVMS.ExecuteScalarAsync<int>
                 (@"Update VehicleOwners SET FirstName =  @FirstName, LastName = @LastName, 
-                    Email = @Email ,Password = @Password Where OwnerId = @ownerId",
+                    Email = @Email ,Password = @Password Where OwnerId = @ownerId select SCOPE_IDENTITY()",
                 new
                 {
                     owner.FirstName,
