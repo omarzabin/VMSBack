@@ -26,26 +26,27 @@ namespace VMSBack.Controllers
 
         }
 
-        [HttpPost("AddVehicle")]
+        [HttpPost]
         public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle,int regId, int insId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             //using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
 
             var vehicleId = await connVMS.ExecuteScalarAsync<int>
-                (" INSERT INTO Vehicles (SecVehicleId,VehicleModel,VehicleAutomaker,VehicleManufactureYear,VehiclePlateNumber,VehicleColor,RegId,InsId)" +
-                "VALUES (@SecVehicleId, @VehicleModele, @VehicleAutomaker, @VehicleManufactureYear, @VehiclePlateNumber,@VehicleColor,@regId,@insId)" +
+                ("INSERT INTO Vehicles (VehicleModel,VehicleAutomaker,VehicleManufactureYear,VehiclePlateNumber,VehicleColor,RegId,InsId,DeviceIMEI)" +
+                "VALUES (@VehicleModel, @VehicleAutomaker, @VehicleManufactureYear, @VehiclePlateNumber,@VehicleColor,@regId,@insId,@DeviceIMEI)" +
                 "select SCOPE_IDENTITY()", 
                 new{
-                    vehicle.SecVehicleId,
                     vehicle.VehicleModel,
                     vehicle.VehicleAutomaker,
                     vehicle.VehicleManufactureYear,
                     vehicle.VehiclePlateNumber,
                     vehicle.VehicleColor,
                     regId,
-                    insId});
-
+                    insId,
+                    vehicle.DeviceIMEI
+                });
+         
             return Ok(vehicleId);
         }
 

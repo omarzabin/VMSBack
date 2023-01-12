@@ -8,10 +8,10 @@ namespace VMSBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VehicleRegstrationController : ControllerBase
+    public class VehicleRegistrationController : ControllerBase
     {
         private readonly IConfiguration _config;
-        public VehicleRegstrationController(IConfiguration config)
+        public VehicleRegistrationController(IConfiguration config)
         {
             _config = config;
         }
@@ -30,14 +30,18 @@ namespace VMSBack.Controllers
             return Ok(registration);
         }
 
-        [HttpPost("AddRegstration")]
+        [HttpPost]
         public async Task<ActionResult<VehicleRegstration>> AddRegstration(VehicleRegstration regstration)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var regId = await connVMS.ExecuteScalarAsync<int>
-                (@"Insert into Registrations (VehicleId,VehicleClassification,ExpiryDate)
-                Values(@VehicleId,@VehicleClassification,@ExpiryDate) select SCOPE_IDENTITY()"
-                , new {regstration.VehicleId, regstration.VehicleClassification, regstration.ExpiryDate });
+                (@"Insert into Registrations (VehicleClassification,ExpiryDate)
+                Values(@VehicleClassification,@ExpiryDate) select SCOPE_IDENTITY()",
+                new
+                {
+                    regstration.VehicleClassification,
+                    regstration.ExpiryDate
+                });
 
             return Ok(regId);
         }

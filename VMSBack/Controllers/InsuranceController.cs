@@ -31,7 +31,7 @@ namespace VMSBack.Controllers
             return Ok(insurance);
         }
 
-        [HttpPost("AddInsurance")]
+        [HttpPost]
         public async Task<ActionResult<Insurance>> AddInsurance(Insurance insurance)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
