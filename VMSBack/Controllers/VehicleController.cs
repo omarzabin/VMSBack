@@ -26,8 +26,8 @@ namespace VMSBack.Controllers
 
         }
 
-        [HttpPost("{regId:int},{insId:int}")]
-        public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle,int regId, int insId)
+        [HttpPost]
+        public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             //using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
@@ -42,8 +42,8 @@ namespace VMSBack.Controllers
                     vehicle.VehicleManufactureYear,
                     vehicle.VehiclePlateNumber,
                     vehicle.VehicleColor,
-                    regId,
-                    insId,
+                    vehicle.RegId,
+                    vehicle.InsId,
                     vehicle.DeviceIMEI
                 });
          
