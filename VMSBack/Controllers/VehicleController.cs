@@ -26,7 +26,7 @@ namespace VMSBack.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost("{regId:int},{insId:int}")]
         public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle,int regId, int insId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));

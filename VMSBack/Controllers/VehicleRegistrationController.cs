@@ -11,6 +11,7 @@ namespace VMSBack.Controllers
     public class VehicleRegistrationController : ControllerBase
     {
         private readonly IConfiguration _config;
+
         public VehicleRegistrationController(IConfiguration config)
         {
             _config = config;
@@ -33,6 +34,7 @@ namespace VMSBack.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleRegstration>> AddRegstration(VehicleRegstration regstration)
         {
+ 
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var regId = await connVMS.ExecuteScalarAsync<int>
                 (@"Insert into Registrations (VehicleClassification,ExpiryDate)
