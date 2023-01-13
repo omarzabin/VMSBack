@@ -13,7 +13,7 @@ namespace VMSBack.Src
         public string VehicleColor { get; set; } = string.Empty;
         public int RegId { get; set; } 
         public int InsId{ get; set; }
-        public BigInteger DeviceIMEI { get; set; }
+        public string DeviceIMEI { get; set; }
 
     }
 }
