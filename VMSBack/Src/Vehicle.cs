@@ -1,4 +1,6 @@
-﻿namespace VMSBack.Src
+﻿using System.Numerics;
+
+namespace VMSBack.Src
 {
     public class Vehicle
     {
@@ -11,7 +13,7 @@
         public string VehicleColor { get; set; } = string.Empty;
         public int RegId { get; set; } 
         public int InsId{ get; set; }
-        public int DeviceIMEI { get; set; }
+        public BigInteger DeviceIMEI { get; set; }
 
     }
 }
