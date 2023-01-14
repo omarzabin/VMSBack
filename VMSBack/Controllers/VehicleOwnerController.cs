@@ -37,7 +37,7 @@ namespace VMSBack.Controllers
 
             return Ok(ownerIdRes);
         }
-        [HttpPut("{ownerId:int},{vehicleId}")]
+        [HttpPut]
         public async Task<ActionResult<int>> UpdateOwnerVehicleId(int ownerId,int vehicleId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
