@@ -24,17 +24,32 @@ namespace VMSBack.Controllers
 
             var ownerIdRes = await connVMS.ExecuteScalarAsync<int>
                 (@"Update VehicleOwners SET FirstName =  @FirstName, LastName = @LastName, 
-                    Email = @Email ,Password = @Password Where OwnerId = @ownerId",
+                    Email = @Email ,Password = @Password , VehicleId=@VehicleId Where OwnerId = @ownerId",
                 new
                 {
                     owner.FirstName,
                     owner.LastName,
                     owner.Email,
                     owner.Password,
-                    ownerId
+                    ownerId,
+                    owner.VehicleId
                 });
 
             return Ok(ownerIdRes);
+        }
+        [HttpPut("{ownerId:int},{vehicleId}")]
+        public async Task<ActionResult<int>> UpdateOwnerVehicleId(int ownerId,int vehicleId)
+        {
+            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
+
+            var res = await connVMS.ExecuteScalarAsync<int>
+                (@"Update VehicleOwners SET VehicleId = @vehicleId where OwnerId = @ownerId", new
+                {
+                    ownerId,
+                    vehicleId
+                });
+            return Ok(res);
+              
         }
 
         [HttpGet]

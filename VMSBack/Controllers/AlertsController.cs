@@ -24,7 +24,7 @@ namespace VMSBack.Controllers
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
             var registration = await connVMS.QueryAsync<Alerts>
                 (@"use TrackingNDB 
-                    select top(1) AE.AddressAr,AE.DeviceIMEI,AE.ExtendedProperties,AE.GPSTime,AE.Latitude,AE.Longitude,AE.Odometer,AE.Speed,AE.StreetSpeed,AE.VehicleIGN
+                    select top(1) AE.AddressAr,AE.DeviceIMEI,AE.ExtendedProperties,AE.GPSTime,AE.Latitude,AE.Longitude,AE.Odometer,AE.Speed,AE.StreetSpeed,AE.VehicleIGN,AE.LocationID
                     from AllEvents AE
                     INNER JOIN VMSDB.dbo.Vehicles V ON V.DeviceIMEI = AE.DeviceIMEI 
                     where V.DeviceIMEI = @IMEI", new { IMEI });
