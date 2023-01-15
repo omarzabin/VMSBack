@@ -54,15 +54,20 @@ namespace VMSBack.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Events>> SelectSecID()
+       
+        [HttpGet("getDeviceIMEI/")]
+        public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(string ownerId)
         {
-            using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
+            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
+            var imei = await connVMS.QueryAsync<string>
+                (@"use VMSDB
+                    select top(1) v.DeviceIMEI 
+                    from VehicleOwners VO
+                    INNER JOIN VMSDB.dbo.Vehicles V ON V.DeviceIMEI = V.DeviceIMEI
+                    where VO.OwnerId = @ownerId"
+                     , new{ownerId});
 
-            //Genarate random Secound Id for the Vehicle from 460  to 500
-
-            var events = await connTrakingNDB.QueryAsync<Events>("SELECT DISTINCT [VehicleID] FROM [dbo].[LastEvent]");
-
-            return Ok(events);
+            return Ok(imei);
         }
 
     }
