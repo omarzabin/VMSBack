@@ -53,7 +53,6 @@ namespace VMSBack.Controllers
               
         }
 
-        [HttpGet]
        
         [HttpGet("getDeviceIMEI/")]
         public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(string ownerId)

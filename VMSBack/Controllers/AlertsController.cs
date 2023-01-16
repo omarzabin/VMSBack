@@ -22,20 +22,20 @@ namespace VMSBack.Controllers
         public async Task<ActionResult<IEnumerable<Alerts>>> GetAlerts(string IMEI)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
-            var registration = await connVMS.QueryAsync<Alerts>
+            var alert = await connVMS.QueryAsync<Alerts>
                 (@"use TrackingNDB 
                     select top(30) AE.AddressAr,AE.DeviceIMEI,AE.ExtendedProperties,AE.GPSTime,AE.Latitude,AE.Longitude,AE.Odometer,AE.Speed,AE.StreetSpeed,AE.VehicleIGN,AE.LocationID
                     from AllEvents AE
                     INNER JOIN VMSDB.dbo.Vehicles V ON V.DeviceIMEI = AE.DeviceIMEI 
                     where V.DeviceIMEI = @IMEI", new { IMEI });
 
-            return Ok(registration);
+            return Ok(alert);
         }
         [HttpGet("latest/")]
         public async Task<ActionResult<IEnumerable<Alerts>>> GetAlertLatest(string IMEI)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
-            var registration = await connVMS.QueryAsync<Alerts>
+            var alert = await connVMS.QueryAsync<Alerts>
                 (@"use TrackingNDB 
                     select top(1) AE.AddressAr,AE.DeviceIMEI,AE.ExtendedProperties,AE.GPSTime,AE.Latitude,AE.Longitude,AE.Odometer,AE.Speed,AE.StreetSpeed,AE.VehicleIGN,AE.LocationID
                     from AllEvents AE
@@ -43,7 +43,7 @@ namespace VMSBack.Controllers
                     where V.DeviceIMEI = @IMEI
                     ORDER BY AE.GPSTime DESC", new { IMEI });
 
-            return Ok(registration);
+            return Ok(alert);
         }
     }
 
