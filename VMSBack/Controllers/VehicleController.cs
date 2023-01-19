@@ -26,7 +26,7 @@ namespace VMSBack.Controllers
 
         }
         [HttpGet("getDeviceIMEI/")]
-        public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(string ownerId)
+        public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(int ownerId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
             var imei = await connVMS.QueryAsync<string>
