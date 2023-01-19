@@ -18,7 +18,7 @@ namespace VMSBack.Controllers
         }
 
         [HttpGet("{regId}")]
-        public async Task<ActionResult<VehicleRegstration>> GetInsurance(int regId)
+        public async Task<ActionResult<VehicleRegstration>> GetRegstration(int regId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var registration = await connVMS.QueryAsync<VehicleRegstration>

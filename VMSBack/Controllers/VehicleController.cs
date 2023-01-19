@@ -17,7 +17,7 @@ namespace VMSBack.Controllers
         }
 
         [HttpGet ("{vehicleId}")]
-        public async Task<ActionResult<Vehicle>> GetVehiucle(int vehicleId)
+        public async Task<ActionResult<Vehicle>> GetVehicle(int vehicleId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var vehicle = await connVMS.QueryAsync<Vehicle>(@"SELECT * FROM Vehicles WHERE VehicleId = @vehicleId",
@@ -25,9 +25,23 @@ namespace VMSBack.Controllers
             return Ok(vehicle); 
 
         }
+        [HttpGet("getDeviceIMEI/")]
+        public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(string ownerId)
+        {
+            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
+            var imei = await connVMS.QueryAsync<string>
+                (@"use VMSDB
+                    select top(1) v.DeviceIMEI 
+                    from VehicleOwners VO
+                    INNER JOIN VMSDB.dbo.Vehicles V ON V.DeviceIMEI = V.DeviceIMEI
+                    where VO.OwnerId = @ownerId"
+                     , new { ownerId });
+
+            return Ok(imei);
+        }
 
         [HttpPost]
-        public async Task<ActionResult<Vehicle>> AddVehicle(Vehicle vehicle)
+        public async Task<ActionResult<int>> AddVehicle(Vehicle vehicle)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             //using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
@@ -50,41 +64,6 @@ namespace VMSBack.Controllers
             return Ok(vehicleId);
         }
 
-        //[HttpPut("{vehicleId:int}")]
-        //public async Task<ActionResult<Vehicle>> UpdateVehicle(Vehicle vehicle,int vehicleId)
-        //{
-        //    using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
-        //    //using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
-
-        //    var vehicleIdRes = await connVMS.ExecuteScalarAsync<int>
-        //        (@"Update Vehicles SET VehicleType =  @VehicleType, VehicleAutomaker = @VehicleAutomaker, 
-        //            VehicleManufactureYear = @VehicleManufactureYear ,VehiclePlateNumber = @VehiclePlateNumber ,VehicleColor,RegId,InsId)",
-        //        new
-        //        {
-        //            vehicle.SecVehicleId,
-        //            vehicle.VehicleType,
-        //            vehicle.VehicleAutomaker,
-        //            vehicle.VehicleManufactureYear,
-        //            vehicle.VehiclePlateNumber,
-        //            vehicle.VehicleColor,
-        //            regId,
-        //            insId
-        //        });
-
-        //    return Ok(vehicleIdRes);
-        //}
-
-        //[HttpGet]
-        //public async Task<ActionResult<Events>> SelectSecID()
-        //{
-        //    using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
-
-        //    //Genarate random Secound Id for the Vehicle from 460  to 500
-
-        //    var events = await connTrakingNDB.QueryAsync<Events>("SELECT DISTINCT [VehicleID] FROM [dbo].[LastEvent]");
-
-        //    return Ok(events);
-        //}
 
         [HttpDelete("hardDelet/vehicleId")]
         public async Task<ActionResult<int>> HardDelete(int vehicleId)

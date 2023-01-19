@@ -49,15 +49,6 @@ namespace VMSBack.Controllers
             return Ok(insId);
         }
 
-        [HttpPut("{InsId:int}")]
-        public async Task<ActionResult<Insurance>> GetSingleHero(Insurance insurance,int insId)
-        {
-            using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
-            var insuranceId = await connection.ExecuteScalarAsync<int>
-                (@"UPDATE Insurance SET InsuranceTy = @InsuranceTy, ExpiryDate = @ExpiryDate
-                 WHERE InsId = @insId", new { insurance.InsuranceTy, insurance.ExpiryDate, insId});
-            return Ok(insuranceId);
-        }
         [HttpDelete("hardDelet/insId")]
         public async Task<ActionResult<int>> HardDelete(int insId)
         {

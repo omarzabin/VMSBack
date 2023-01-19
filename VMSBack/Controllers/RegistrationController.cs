@@ -21,7 +21,7 @@ namespace VMSBack.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<int>> Regester(VehicleOwner owner)
+        public async Task<ActionResult<int>> Registr(VehicleOwner owner)
         {
             using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var ownerId = await conn.ExecuteScalarAsync<int>
@@ -31,16 +31,6 @@ namespace VMSBack.Controllers
             return Ok(ownerId);
         }
 
-        [HttpGet ("{regId}")]
-
-        public async Task<ActionResult<VehicleRegstration>> getRegstration (int regId)
-        {
-            using var conn = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
-            var reg = await conn.QueryAsync<VehicleRegstration>
-                (@" select * from Registrations
-                    WHERE RegId =@regId", new {regId});
-
-            return Ok(reg);
-        }
+     
     }
 }

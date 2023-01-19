@@ -48,26 +48,11 @@ namespace VMSBack.Controllers
                     vehicleId
                 });
             return Ok(res);
-
-
-              
+  
         }
 
        
-        [HttpGet("getDeviceIMEI/")]
-        public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(string ownerId)
-        {
-            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
-            var imei = await connVMS.QueryAsync<string>
-                (@"use VMSDB
-                    select top(1) v.DeviceIMEI 
-                    from VehicleOwners VO
-                    INNER JOIN VMSDB.dbo.Vehicles V ON V.DeviceIMEI = V.DeviceIMEI
-                    where VO.OwnerId = @ownerId"
-                     , new{ownerId});
-
-            return Ok(imei);
-        }
+    
 
     }
 }
