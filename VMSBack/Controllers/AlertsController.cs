@@ -32,7 +32,7 @@ namespace VMSBack.Controllers
             return Ok(alert);
         }
         [HttpGet("latest/")]
-        public async Task<ActionResult<IEnumerable<Alerts>>> GetAlertLatest(string IMEI)
+        public async Task<ActionResult<Alerts>> GetAlertLatest(string IMEI)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection3"));
             var alert = await connVMS.QueryAsync<Alerts>
