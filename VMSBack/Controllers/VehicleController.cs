@@ -24,6 +24,7 @@ namespace VMSBack.Controllers
                 new { vehicleId });
             return Ok(vehicle); 
 
+
         }
         [HttpGet("getDeviceIMEI/")]
         public async Task<ActionResult<IEnumerable<string>>> GetDeviceIMEI(int ownerId)
