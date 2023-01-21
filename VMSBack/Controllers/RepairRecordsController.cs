@@ -20,27 +20,34 @@ namespace VMSBack.Controllers
         public async Task<ActionResult<RepairRecords>> GetRecords(int vehicleId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
-            var records= await connVMS.QueryAsync<RepairRecords>(@"SELECT * FROM Vehicles WHERE VehicleId = @vehicleId",
+            var records= await connVMS.QueryAsync<RepairRecords>(@"SELECT * FROM RepairRecords WHERE VehicleId = @vehicleId",
                 new { vehicleId });
             return Ok(records);
 
         }
         [HttpPost]
-        public async Task<ActionResult<int>> AddRecords(RepairRecords records)
+        public async Task<ActionResult<int>> AddRecord(RepairRecords record)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             //using var connTrakingNDB = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
 
-            var vehicleId = await connVMS.ExecuteScalarAsync<int>
-                ("INSERT INTO Vehicles ()" +
-                "VALUES ()" +
-                "select SCOPE_IDENTITY()",
+
+            var repId = await connVMS.ExecuteScalarAsync<int>
+                (@"INSERT INTO RepairRecords (PartName,Description,Price,WorkShop,OilLife,VehicleId,RepairDate)
+                VALUES (@PartName,@Description,@Price,@WorkShop,@OilLife,@VehicleId,@RepairDate) 
+                select SCOPE_IDENTITY()",
                 new
                 {
-                    
+                   record.PartName,
+                   record.Description,
+                   record.Price,
+                   record.WorkShop,
+                   record.OilLife,
+                   record.VehicleId,
+                   record.RepairDate
                 });
 
-            return Ok(vehicleId);
+            return Ok(repId);
         }
 
     }
