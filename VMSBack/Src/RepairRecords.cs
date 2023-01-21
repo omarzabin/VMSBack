@@ -7,7 +7,7 @@
         public string RepairDescription { get; set; } = string.Empty;
         public string WorkShop { get; set; } = string.Empty;
         public string Cost { get; set; } = string.Empty;
-        
+        public int OilLife { get; set; }
         public DateTime RepairDate { get; set; } 
     }
 }
