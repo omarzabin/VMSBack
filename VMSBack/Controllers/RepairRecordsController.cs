@@ -20,7 +20,7 @@ namespace VMSBack.Controllers
         public async Task<ActionResult<IEnumerable<RepairRecords>>> GetRecords(int vehicleId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
-            var records= await connVMS.QueryAsync<RepairRecords>(@"SELECT * FROM RepairRecords WHERE VehicleId = @vehicleId",
+            var records= await connVMS.QueryAsync<RepairRecords>(@"SELECT * FROM RepairRecords WHERE VehicleId = @vehicleId order by RepairDate desc",
                 new { vehicleId });
             return Ok(records);
 
