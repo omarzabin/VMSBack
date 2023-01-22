@@ -17,11 +17,21 @@ namespace VMSBack.Controllers
         }
 
         [HttpGet("{vehicleId}")]
-        public async Task<ActionResult<RepairRecords>> GetRecords(int vehicleId)
+        public async Task<ActionResult<IEnumerable<RepairRecords>>> GetRecords(int vehicleId)
         {
             using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
             var records= await connVMS.QueryAsync<RepairRecords>(@"SELECT * FROM RepairRecords WHERE VehicleId = @vehicleId",
                 new { vehicleId });
+            return Ok(records);
+
+        }
+        [HttpGet("latest/")]
+        public async Task<ActionResult<RepairRecords>> GetLatestRecords(int vehicleId,string pName)
+        {
+            using var connVMS = new SqlConnection(_config.GetConnectionString("DefaultConnection2"));
+            var records = await connVMS.QueryAsync<RepairRecords>(@"SELECT top (1) OilLife FROM RepairRecords WHERE  PartName = @pName
+                                and VehicleId = @vehicleId order by RepairDate desc",
+                new { vehicleId,pName});
             return Ok(records);
 
         }
